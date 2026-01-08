@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentOps Needs CHANGE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #ffffff;
+            color: #0f172a;
+            overflow-x: hidden;
+        }
+
+        /* Futuristic Hero Patch - Reduced size and soft masked edge */
+        .hero-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80vw;
+            height: 60vh;
+            background: radial-gradient(circle at 50% 30%, rgba(186, 230, 253, 0.5) 0%, rgba(255, 255, 255, 0) 75%);
+            z-index: 0;
+            pointer-events: none;
+            /* Seamlessly fades the bottom edge of the glow */
+            mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        }
+
+        .sidebar-letter {
+            transition: color 0.3s ease;
+            color: #f1f5f9;
+            line-height: 1.1;
+        }
+        .sidebar-letter.active { color: #2563eb; }
+
+        /* Spotlight Logic - Using Your Exact Values */
+        .spotlight-container {
+            width: 100%; height: 100%; position: relative;
+            -webkit-mask-image: radial-gradient(circle, black 100%, transparent 100%);
+            -webkit-mask-repeat: no-repeat; -webkit-mask-size: 100% 100%;
+            transition: -webkit-mask-position 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                        -webkit-mask-size 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mask-None { -webkit-mask-size: 100% 100%; -webkit-mask-position: 0% 0%; }
+        .mask-C { -webkit-mask-size: 22% 50%; -webkit-mask-position: 0% 0%; }
+        .mask-H { -webkit-mask-size: 19% 50%; -webkit-mask-position: 27% 0%; }
+        .mask-A { -webkit-mask-size: 19% 50%; -webkit-mask-position: 50% 0%; }
+        .mask-N { -webkit-mask-size: 19% 50%; -webkit-mask-position: 74% 0%; }
+        .mask-G { -webkit-mask-size: 19% 50%; -webkit-mask-position: 97% 0%; }
+        .mask-E { -webkit-mask-size: 51% 40%; -webkit-mask-position: 50% 100%; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+        }
+
+        .cards-stack {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            align-items: center;
+            justify-items: end; /* Cards hug the center line from the left */
+            height: 100%;
+            padding-right: 3rem; 
+        }
+
+        .capability-block {
+            grid-area: 1 / 1 / 2 / 2;
+            opacity: 0;
+            visibility: hidden;
+            width: 100%;
+            max-width: 580px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section id="hero" class="h-screen flex flex-col items-center justify-center text-center px-4 bg-white relative z-20">
+        <div class="hero-glow" id="hero-patch"></div>
+        
+        <h1 class="text-6xl md:text-8xl font-800 tracking-tighter mb-12 text-slate-900 relative z-10">
+            Architecting AgentOps <br> Needs <span class="text-blue-600">CHANGE</span>
+        </h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl w-full px-6 relative z-10">
+            <div class="space-y-2">
+                <p class="font-bold text-xl text-slate-800">Shaunak Biswas</p>
+                <p class="text-blue-600 text-sm italic">shaunak.biswas@research.iiit.ac.in</p>
+                <p class="text-slate-400 text-xs uppercase tracking-widest">SERC, IIIT Hyderabad, India</p>
+            </div>
+            <div class="space-y-2">
+                <p class="font-bold text-xl text-slate-800">Hiya Bhatt</p>
+                <p class="text-blue-600 text-sm italic">hiya.bhatt@research.iiit.ac.in</p>
+                <p class="text-slate-400 text-xs uppercase tracking-widest">SERC, IIIT Hyderabad, India</p>
+            </div>
+            <div class="space-y-2">
+                <p class="font-bold text-xl text-slate-800">Karthik Vaidhyanathan</p>
+                <p class="text-blue-600 text-sm italic">karthik.vaidhyanathan@iiit.ac.in</p>
+                <p class="text-slate-400 text-xs uppercase tracking-widest">SERC, IIIT Hyderabad, India</p>
+            </div>
+        </div>
+
+        <div class="mt-20 animate-bounce text-slate-200">
+            <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-width="2"></path></svg>
+        </div>
+    </section>
+
+    <!-- Sticky Sidebar -->
+    <div class="fixed left-12 top-0 h-screen flex flex-col justify-center gap-1 z-50">
+        <div id="side-C" class="sidebar-letter text-6xl font-black">C</div>
+        <div id="side-H" class="sidebar-letter text-6xl font-black">H</div>
+        <div id="side-A" class="sidebar-letter text-6xl font-black">A</div>
+        <div id="side-N" class="sidebar-letter text-6xl font-black">N</div>
+        <div id="side-G" class="sidebar-letter text-6xl font-black">G</div>
+        <div id="side-E" class="sidebar-letter text-6xl font-black">E</div>
+    </div>
+
+    <!-- Main Experience Area -->
+    <div id="scroll-wrapper" class="relative bg-white">
+        
+        <!-- Right Side: Sticky Diagram -->
+        <div class="sticky top-0 h-screen w-full lg:w-1/2 float-right flex items-center justify-center p-12 z-0">
+            <div class="relative w-full max-w-3xl">
+                <img id="diagram-base" src="framework.png" class="w-full opacity-5 absolute inset-0 transition-opacity duration-700">
+                <div id="spotlight" class="spotlight-container mask-None opacity-0 transition-opacity duration-700">
+                    <img src="framework.png" class="w-full h-auto">
+                </div>
+            </div>
+        </div>
+
+        <!-- Left Side -->
+        <div class="w-full lg:w-1/2">
+            
+            <!-- Reduced gap spacer for Intro -->
+            <section class="h-screen mt-[-15vh] flex items-center justify-end px-12 lg:pr-8" id="intro-trigger">
+                <div id="intro-card" class="glass p-12 rounded-[2.5rem] w-full max-w-[600px] opacity-100">
+                    <h2 class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-6">Our Position</h2>
+                    <h3 class="text-4xl font-extrabold mb-6">Moving Beyond static MLOps</h3>
+                    <p class="text-lg text-slate-600 leading-relaxed">
+                        Traditional MLOps assumes behavior can be governed through versioning and monitoring. This fails once agents learn after release. 
+                        <strong>CHANGE</strong> provides six essential capabilities to manage systems that think and evolve.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Capabilities Section -->
+            <section class="h-[900vh]" id="capabilities-scroll-section">
+                <div class="sticky top-0 h-screen flex items-center justify-center">
+                    <div class="cards-stack w-full">
+                        
+                        <!-- C -->
+                        <div class="capability-block" id="block-C">
+                            <div class="glass p-12 rounded-[3rem] border-l-[12px] border-orange-400">
+                                <h3 class="text-5xl font-black mb-6">Contextualize</h3>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">Encodes an agent’s <strong>learning trajectory</strong>, enabling stable adaptation by replaying operational history as a versioned artifact.</p>
+                                <div class="bg-orange-50/50 p-6 rounded-2xl italic border border-orange-100 text-slate-700 text-sm">
+                                    "Alice's interactions create a unique experiential context, treated as an evolving history rather than a model version."
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- H -->
+                        <div class="capability-block" id="block-H">
+                            <div class="glass p-12 rounded-[3rem] border-l-[12px] border-yellow-400">
+                                <h3 class="text-5xl font-black mb-6">Harmonize</h3>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">Maintains alignment via <strong>behavioral consensus protocols</strong> and shared spaces where agents align on goals.</p>
+                                <div class="bg-yellow-50/50 p-6 rounded-2xl italic border border-yellow-100 text-slate-700 text-sm">
+                                    "Alice and Bob detect conflicting recommendations in shared logistics and trigger a consensus step to handle returns."
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- A -->
+                        <div class="capability-block" id="block-A">
+                            <div class="glass p-12 rounded-[3rem] border-l-[12px] border-blue-400">
+                                <h3 class="text-5xl font-black mb-6">Anticipate</h3>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">Forecasts <strong>behavioral drift</strong> by mirroring agents in a digital-twin sandbox to explore novel scenarios.</p>
+                                <div class="bg-blue-50/50 p-6 rounded-2xl italic border border-blue-100 text-slate-700 text-sm">
+                                    "The system identifies early signs of Alice's behavioral drift and tests her simulated counterpart in a controlled sandbox."
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- N -->
+                        <div class="capability-block" id="block-N">
+                            <div class="glass p-12 rounded-[3rem] border-l-[12px] border-purple-400">
+                                <h3 class="text-5xl font-black mb-6">Negotiate</h3>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">Dynamically manages <strong>autonomy and oversight</strong>. Agents request permission for cases outside policy boundaries.</p>
+                                <div class="bg-purple-50/50 p-6 rounded-2xl italic border border-purple-100 text-slate-700 text-sm">
+                                    "Alice requests temporary permission to handle a complex refund directly, providing an explanation of her reasoning to a supervisor."
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- G -->
+                        <div class="capability-block" id="block-G">
+                            <div class="glass p-12 rounded-[3rem] border-l-[12px] border-red-400">
+                                <h3 class="text-5xl font-black mb-6">Generate</h3>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">Enables systems to grow by allowing agents to propose, test, and integrate <strong>new tools</strong> based on experience.</p>
+                                <div class="bg-red-50/50 p-6 rounded-2xl italic border border-red-100 text-slate-700 text-sm">
+                                    "Alice notices a latency bottleneck and proposes an automated query tool that consolidates carrier data into the system."
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- E -->
+                        <div class="capability-block" id="block-E">
+                            <div class="glass p-12 rounded-[3rem] border-l-[12px] border-green-500">
+                                <h3 class="text-5xl font-black mb-6">Evolve</h3>
+                                <p class="text-lg text-slate-600 leading-relaxed mb-6">Governs long-term adaptation through <strong>Knowledge Distillation</strong>, transferring nuance to new successors.</p>
+                                <div class="bg-green-50/50 p-6 rounded-2xl italic border border-green-100 text-slate-700 text-sm">
+                                    "Alice's strategies are distilled into a training corpus for her successor, Alex, ensuring knowledge is preserved while patterns align."
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Final CTA Section (Reduced scroll gap) -->
+    <section class="min-h-[80vh] flex items-center justify-center text-center px-4 bg-white z-20 relative">
+        <div class="max-w-4xl">
+            <h2 class="text-6xl font-extrabold mb-10 text-slate-900 leading-tight">Architecting the future of AgentOps.</h2>
+            <button class="bg-blue-600 text-white px-12 py-5 rounded-2xl font-bold text-xl hover:bg-blue-700 transition-all shadow-xl shadow-blue-200">
+                Read Full Paper
+            </button>
+        </div>
+    </section>
+
+    <footer class="py-16 text-center text-slate-400 text-sm border-t border-slate-100 relative z-30 bg-white">
+        &copy; 2026 Shaunak Biswas, Hiya Bhatt, Karthik Vaidhyanathan • SERC, IIIT Hyderabad
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const spotlight = document.getElementById('spotlight');
+        const diagramBase = document.getElementById('diagram-base');
+        const heroPatch = document.getElementById('hero-patch');
+        
+        // --- Hero Logic (Fade out hero glow patch) ---
+        gsap.to(heroPatch, {
+            scrollTrigger: {
+                trigger: "#hero",
+                start: "top top",
+                end: "50% top",
+                scrub: true
+            },
+            opacity: 0,
+            y: -20
+        });
+
+        // --- Intro Sequence ---
+        const introTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#intro-trigger",
+                start: "top center",
+                end: "bottom center",
+                scrub: true,
+                onEnter: () => {
+                    spotlight.className = "spotlight-container mask-None";
+                    spotlight.style.opacity = "1";
+                    diagramBase.style.opacity = "0.05";
+                },
+                onLeaveBack: () => {
+                    spotlight.style.opacity = "0";
+                }
+            }
+        });
+        
+        introTL.to("#intro-card", { opacity: 1, duration: 1 })
+               .to("#intro-card", { opacity: 0, y: -40, duration: 1 });
+
+        // --- Capabilities Timeline ---
+        const caps = ['C', 'H', 'A', 'N', 'G', 'E'];
+        const masterTL = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#capabilities-scroll-section",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: 1
+            }
+        });
+
+        caps.forEach((letter, i) => {
+            const block = document.getElementById(`block-${letter}`);
+            
+            masterTL.to(block, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.5,
+                onStart: () => {
+                    spotlight.className = `spotlight-container mask-${letter}`;
+                    document.querySelectorAll('.sidebar-letter').forEach(l => l.classList.remove('active'));
+                    document.getElementById(`side-${letter}`).classList.add('active');
+                }
+            }, i * 3);
+
+            masterTL.to(block, { y: 0, duration: 2 }); // Card dwell time
+
+            masterTL.to(block, {
+                autoAlpha: 0,
+                y: -40,
+                duration: 0.5
+            });
+        });
+
+        // Conclusion Reset
+        ScrollTrigger.create({
+            trigger: "footer",
+            start: "top bottom",
+            onEnter: () => { spotlight.style.opacity = "0"; }
+        });
+    </script>
+</body>
+</html>
