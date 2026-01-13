@@ -20,9 +20,9 @@
         .hero-glow {
             position: absolute;
             top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200vw;
+            left: 0%;
+            transform: none;
+            width: 100vw;
             height: 70vh;
             background: radial-gradient(circle at 50% 35%, rgba(186, 230, 253, 0.45) 0%, rgba(255, 255, 255, 0) 70%);
             z-index: 0;
@@ -285,6 +285,7 @@
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.config({ ignoreMobileResize: true });
 
         const spotlight = document.getElementById('spotlight');
         const zoomStage = document.getElementById('zoom-stage');
@@ -388,6 +389,11 @@
                 letters.forEach(l => l.classList.remove('active'));
             }
         });
+
+        window.addEventListener("load", () => ScrollTrigger.refresh());
+        window.addEventListener("orientationchange", () => ScrollTrigger.refresh());
     </script>
 </body>
 </html>
+
+window.addEventListener("load", () => ScrollTrigger.refresh());
