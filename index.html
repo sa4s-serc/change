@@ -401,6 +401,14 @@
             onEnter: () => { 
                 spotlight.style.opacity = "0"; 
                 letters.forEach(l => l.classList.remove('active'));
+            },
+            onLeaveBack: () => {
+                // Restore the last capability (E)
+                spotlight.style.opacity = "1";
+                spotlight.className = "spotlight-container mask-E";
+                zoomStage.className = "spotlight-wrapper zoom-E";
+                letters.forEach(l => l.classList.remove('active'));
+                document.getElementById("side-E").classList.add("active");
             }
         });
 
