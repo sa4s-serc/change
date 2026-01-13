@@ -360,16 +360,30 @@
             const block = document.getElementById(`block-${letter}`);
             
             masterTL.to(block, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.5,
-                onStart: () => {
-                    spotlight.className = `spotlight-container mask-${letter}`;
-                    zoomStage.className = `spotlight-wrapper zoom-${letter}`;
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            onStart: () => {
+                spotlight.className = `spotlight-container mask-${letter}`;
+                zoomStage.className = `spotlight-wrapper zoom-${letter}`;
+                letters.forEach(l => l.classList.remove('active'));
+                document.getElementById(`side-${letter}`).classList.add('active');
+            },
+            onReverseComplete: () => {
+                const prev = caps[i - 1];
+                if (prev) {
+                    spotlight.className = `spotlight-container mask-${prev}`;
+                    zoomStage.className = `spotlight-wrapper zoom-${prev}`;
                     letters.forEach(l => l.classList.remove('active'));
-                    document.getElementById(`side-${letter}`).classList.add('active');
+                    document.getElementById(`side-${prev}`).classList.add('active');
+                } else {
+                    // back before "C"
+                    spotlight.className = "spotlight-container mask-None";
+                    zoomStage.className = "spotlight-wrapper zoom-None";
+                    letters.forEach(l => l.classList.remove('active'));
                 }
-            }, i * 3);
+            }
+        }, i * 3);
 
             masterTL.to(block, { y: 0, duration: 2 }); 
 
